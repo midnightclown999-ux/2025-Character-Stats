@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Character Stats - KOF Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Black+Ops+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="bgm" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3?filename=retro-game-music-short-loop.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        
+        <header class="game-header">
+            <h1>THE KING OF <span class="year">2025</span></h1>
+            <p class="subtitle">SELECT YOUR CHARACTER</p>
+        </header>
+
+        <section id="input-section" class="panel active">
+            <div class="form-group">
+                <label for="charName">PLAYER NAME</label>
+                <input type="text" id="charName" placeholder="INSERT NAME..." maxlength="12" autocomplete="off">
+            </div>
+
+            <div class="form-group photo-upload">
+                <label>AVATAR UPLOAD</label>
+                <input type="file" id="charPhoto" accept="image/*">
+                <div class="preview-box" id="previewBox">No Photo</div>
+            </div>
+
+            <div class="stats-input">
+                <div class="slider-group">
+                    <label>HAPPINESS <span id="val-happy">50</span></label>
+                    <input type="range" id="happy" min="0" max="100" value="50">
+                </div>
+                <div class="slider-group">
+                    <label>BUSYNESS <span id="val-busy">50</span></label>
+                    <input type="range" id="busy" min="0" max="100" value="50">
+                </div>
+                <div class="slider-group">
+                    <label>LUCK <span id="val-luck">50</span></label>
+                    <input type="range" id="luck" min="0" max="100" value="50">
+                </div>
+            </div>
+
+            <button id="generateBtn" class="arcade-btn">READY? GO!</button>
+        </section>
+
+        <section id="output-section" class="panel hidden">
+            <div class="character-card">
+                <div class="card-header">
+                    <span class="rank" id="rankBadge">A</span>
+                    <h2 id="displayName">PLAYER</h2>
+                </div>
+                
+                <div class="card-visual">
+                    <div class="portrait-frame">
+                        <img id="displayPhoto" src="" alt="Character">
+                    </div>
+                </div>
+
+                <div class="card-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">HP (Happy)</span>
+                        <div class="bar-container">
+                            <div class="bar-fill hp-bar" id="barHappy"></div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">MP (Busy)</span>
+                        <div class="bar-container">
+                            <div class="bar-fill mp-bar" id="barBusy"></div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">CRIT (Luck)</span>
+                        <div class="bar-container">
+                            <div class="bar-fill crit-bar" id="barLuck"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <p>FIGHTER STATS 2025</p>
+                </div>
+            </div>
+
+            <button id="retryBtn" class="arcade-btn small">SELECT NEW PLAYER</button>
+            <button id="downloadBtn" class="arcade-btn small">SAVE CARD</button>
+        </section>
+
+        <footer class="privacy-notice">
+            <p>🔒 DATA PROCESSED LOCALLY IN BROWSER. NO DATA UPLOADED TO SERVER.</p>
+        </footer>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

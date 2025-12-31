@@ -1,0 +1,205 @@
+/* RESET & BASIC */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Russo One', sans-serif;
+}
+
+body {
+    background-color: #050510;
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* HEADER STYLE */
+.game-header h1 {
+    font-family: 'Black Ops One', cursive;
+    font-size: 2.5rem;
+    color: #ffd700; /* Gold */
+    text-shadow: 3px 3px 0px #b22222; /* Red Shadow */
+    font-style: italic;
+    transform: skewX(-10deg);
+}
+
+.subtitle {
+    letter-spacing: 3px;
+    color: #00d2ff;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    text-shadow: 0 0 5px #00d2ff;
+}
+
+/* PANEL HANDLING */
+.panel.hidden { display: none; }
+.panel.active { display: block; animation: fadeIn 0.5s ease; }
+
+/* INPUT FORM STYLE */
+.form-group { margin-bottom: 15px; text-align: left; }
+label { display: block; margin-bottom: 5px; color: #aaa; font-size: 0.8rem; letter-spacing: 1px; }
+
+input[type="text"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #333;
+    padding: 10px;
+    color: #fff;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    outline: none;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus { border-color: #ffd700; box-shadow: 0 0 10px #ffd700; }
+
+/* PHOTO UPLOAD */
+.photo-upload input { display: none; }
+.preview-box {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+.preview-box:hover { border-color: #00d2ff; color: #00d2ff; }
+
+/* SLIDERS (Looking like UI Bars) */
+.slider-group { margin-bottom: 15px; text-align: left; }
+input[type="range"] {
+    width: 100%;
+    accent-color: #b22222;
+    cursor: pointer;
+}
+
+/* ARCADE BUTTON */
+.arcade-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    background: linear-gradient(45deg, #b22222, #ff4500);
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    cursor: pointer;
+    transition: 0.2s;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.arcade-btn:hover { transform: scale(1.02); filter: brightness(1.2); }
+.arcade-btn:active { transform: scale(0.98); }
+.arcade-btn.small { width: 48%; display: inline-block; font-size: 0.9rem; background: #333; }
+
+/* CHARACTER CARD STYLE (KOF VIBE) */
+.character-card {
+    background: rgba(0, 0, 0, 0.6);
+    border: 3px solid #ffd700;
+    padding: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    /* Desain miring ala UI game fighting */
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #fff;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.rank {
+    font-size: 2.5rem;
+    color: #ff0000;
+    margin-right: 15px;
+    text-shadow: 0 0 10px red;
+    font-style: italic;
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #fff;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.card-visual {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border: 2px solid #444;
+    margin-bottom: 15px;
+    background: #000;
+}
+
+.portrait-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Efek sedikit zoom saat render */
+    animation: zoomIn 10s infinite alternate; 
+}
+
+/* STAT BARS (Health Bar Style) */
+.stat-row { margin-bottom: 8px; text-align: left; }
+.stat-label { font-size: 0.8rem; color: #ffd700; }
+.bar-container {
+    height: 15px;
+    background: #333;
+    border: 1px solid #fff;
+    transform: skewX(-20deg);
+}
+
+.bar-fill {
+    height: 100%;
+    width: 0%; /* JS will animate this */
+    transition: width 1s ease-out;
+}
+
+/* Warna Bar Khas Game */
+.hp-bar { background: linear-gradient(90deg, #ffff00, #ff0000); } /* Kuning ke Merah */
+.mp-bar { background: linear-gradient(90deg, #00ffff, #0000ff); } /* Cyan ke Biru */
+.crit-bar { background: linear-gradient(90deg, #00ff00, #006400); } /* Hijau */
+
+.card-footer {
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 10px;
+    text-align: right;
+}
+
+/* FOOTER PRIVACY */
+.privacy-notice {
+    margin-top: 30px;
+    font-size: 0.7rem;
+    color: #444;
+    border-top: 1px solid #222;
+    padding-top: 10px;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes zoomIn { from { transform: scale(1); } to { transform: scale(1.1); } }
