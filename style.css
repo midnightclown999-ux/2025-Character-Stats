@@ -1,176 +1,244 @@
-/* RESET & BASIC */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Russo One', sans-serif; }
+/* === RESET & CORE === */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 body {
-    background-color: #050510;
-    /* Background Pattern Carbon */
+    font-family: 'Russo One', sans-serif;
+    background-color: #0a0a14;
+    /* Background yang lebih 'deep' */
     background-image: 
-        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+        radial-gradient(circle at center, rgba(40,0,0,0.5) 0%, rgba(0,0,0,1) 90%),
+        url('https://www.transparenttextures.com/patterns/carbon-fibre-v2.png');
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; padding: 20px 10px;
 }
 
-.container { width: 100%; max-width: 450px; padding: 20px; text-align: center; }
+.main-container { width: 100%; max-width: 480px; /* Sedikit lebih lebar untuk IG */ text-align: center; }
 
-/* HEADER */
+/* === HEADER & TYPOGRAPHY === */
+.game-header { margin-bottom: 25px; }
 .game-header h1 {
-    font-family: 'Black Ops One', cursive;
-    font-size: 2.5rem;
-    color: #ffd700;
-    text-shadow: 3px 3px 0px #8b0000;
-    font-style: italic;
-    transform: skewX(-10deg);
+    font-family: 'Black Ops One', cursive; font-size: 2.8rem;
+    background: linear-gradient(to bottom, #ffd700, #ff8c00);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(3px 3px 0px #8b0000);
+    transform: skewX(-8deg); line-height: 1.1;
 }
-.subtitle { color: #00d2ff; margin-bottom: 20px; letter-spacing: 2px; font-size: 0.8rem; }
+.subtitle { color: #00eaff; letter-spacing: 3px; font-size: 0.9rem; text-shadow: 0 0 10px rgba(0, 234, 255, 0.5); margin-top: 5px; }
 
-/* PANEL LOGIC */
+/* === UTILITIES & PANEL === */
 .panel.hidden { display: none; }
-.panel.active { display: block; animation: fadeIn 0.5s ease; }
+.panel.active { display: block; animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 
-/* INPUT FORM */
-.form-group { margin-bottom: 15px; text-align: left; }
-label { display: block; margin-bottom: 5px; color: #aaa; font-size: 0.7rem; letter-spacing: 1px; }
+/* === INPUT SECTION STYLING === */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    padding: 25px 20px; border-radius: 12px;
+}
+.form-group { margin-bottom: 20px; text-align: left; }
+label { display: block; margin-bottom: 8px; color: #ccc; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;}
 
 input[type="text"] {
-    width: 100%; background: rgba(255, 255, 255, 0.1); border: 2px solid #333;
-    padding: 10px; color: #fff; font-size: 1.2rem; text-transform: uppercase;
-    outline: none; transition: 0.3s;
+    width: 100%; background: rgba(0, 0, 0, 0.3); border: 2px solid #444;
+    padding: 12px; color: #fff; font-size: 1.1rem; text-transform: uppercase;
+    border-radius: 4px; outline: none; transition: 0.3s; letter-spacing: 1px;
 }
-input[type="text"]:focus { border-color: #ffd700; box-shadow: 0 0 10px #ffd700; }
+input[type="text"]:focus { border-color: #ff4500; box-shadow: 0 0 15px rgba(255, 69, 0, 0.4); }
 
-/* PHOTO UPLOAD */
-.photo-upload input { display: none; }
+/* --- FIX: PHOTO UPLOAD PREVIEW --- */
+.photo-upload-group input { display: none; }
 .preview-box {
-    width: 100%; height: 150px; border: 2px dashed #444;
+    width: 100%; height: 200px; /* Lebih tinggi */
+    border: 3px dashed #555; border-radius: 8px;
     display: flex; justify-content: center; align-items: center;
-    color: #555; cursor: pointer; background-size: cover; background-position: center;
-    font-size: 0.8rem;
+    color: #777; cursor: pointer;
+    /* KUNCI PERBAIKAN CROP PREVIEW */
+    background-size: cover;
+    background-position: center top; /* Fokus pada bagian atas tengah (wajah) */
+    background-repeat: no-repeat;
+    transition: all 0.3s; position: relative; overflow: hidden;
 }
-.preview-box:hover { border-color: #00d2ff; color: #00d2ff; }
+.preview-box:hover { border-color: #00eaff; color: #00eaff; background-color: rgba(0, 234, 255, 0.05); }
+.preview-box span { z-index: 2; font-size: 0.9rem; pointer-events: none;}
 
-/* SLIDER */
-.slider-group { margin-bottom: 15px; text-align: left; }
-input[type="range"] { width: 100%; accent-color: #b22222; cursor: pointer; }
-
-/* === KOF CARD DESIGN (NEW) === */
-.character-card-container {
-    position: relative; margin-bottom: 25px; perspective: 1000px;
+/* SLIDERS */
+.val-indicator { float: right; color: #ffd700; font-weight: bold; }
+input[type="range"] {
+    width: 100%; height: 10px; -webkit-appearance: none; background: #222;
+    border-radius: 5px; border: 1px solid #444; outline: none; margin-top: 5px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 24px; height: 24px; background: #ff4500;
+    border: 2px solid #ffd700; cursor: pointer; box-shadow: 0 0 10px #ff4500;
+    transform: rotate(45deg); /* Diamond shape thumb */
 }
 
-/* Background Flare */
-.card-bg-flares {
-    position: absolute; top: -20px; left: -20px; right: -20px; bottom: -20px;
-    background: radial-gradient(circle, rgba(255,69,0,0.3) 0%, rgba(0,0,0,0) 70%);
-    z-index: 0; animation: flarePulse 3s infinite alternate;
+/* === OUTPUT CARD - INSTAGRAM AESTHETICS === */
+.capture-area {
+    position: relative; padding: 20px 0; margin: 20px 0;
+    perspective: 1000px; /* Untuk efek 3D halus */
 }
 
-/* Main Card Body */
+/* Efek Cahaya Belakang Dramatis untuk IG */
+.bg-flare-effect {
+    position: absolute; top: 50%; left: 50%;
+    width: 120%; height: 120%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255,69,0,0.5) 0%, rgba(255,0,0,0.1) 50%, rgba(0,0,0,0) 80%);
+    z-index: 0; filter: blur(20px); opacity: 0.8;
+    animation: pulseFlare 4s infinite alternate ease-in-out;
+}
+
+/* Kartu Utama */
 .character-card {
-    position: relative; z-index: 2;
-    background: linear-gradient(135deg, rgba(20,0,0,0.95), rgba(40,0,0,0.95));
-    border: 3px solid;
-    border-image: linear-gradient(45deg, #ffd700, #ff4500, #8b0000) 1;
-    padding: 5px;
-    clip-path: polygon(0 0, 95% 0, 100% 30px, 100% 100%, 5% 100%, 0% calc(100% - 30px));
-    box-shadow: 0 0 30px rgba(255, 69, 0, 0.5);
-    overflow: hidden;
+    position: relative; z-index: 5;
+    /* Latar belakang metalik gelap */
+    background: linear-gradient(160deg, #1a1a1a, #0d0d0d);
+    border: 4px solid;
+    /* Border gradient emas berapi */
+    border-image: linear-gradient(45deg, #ffd700, #ff4500, #8b0000, #ffd700) 1;
+    /* Bentuk asimetris KOF yang agresif */
+    clip-path: polygon(2% 0, 98% 0, 100% 2%, 100% 95%, 95% 100%, 5% 100%, 0 95%, 0 5%);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(255, 69, 0, 0.2);
+    padding: 8px; overflow: hidden;
 }
 
-/* Rank Badge */
-.rank-container {
-    position: absolute; top: 10px; left: 10px; z-index: 10;
-    text-align: center; transform: rotate(-5deg);
+/* --- RANK BADGE PREMIUM --- */
+.rank-badge-container {
+    position: absolute; top: -5px; left: -5px; z-index: 10;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
 }
-.rank-label {
-    display: block; font-size: 0.6rem; color: #ffd700; background: #8b0000;
-    padding: 2px 5px; margin-bottom: -5px; border: 1px solid #ffd700;
+.rank-metal-plate {
+    background: linear-gradient(135deg, #a90329 0%, #8f0222 44%, #6d0019 100%);
+    border: 2px solid #ffd700;
+    padding: 5px 10px 2px 10px;
+    transform: skewX(-10deg) rotate(-5deg);
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.3);
 }
-.rank {
-    font-family: 'Black Ops One', cursive; font-size: 4rem; color: #fff;
-    text-shadow: 0 0 5px #fff, 0 0 10px #ff4500, 0 0 20px #ff0000;
-    margin: 0; line-height: 1;
+.rank-label { display: block; font-size: 0.55rem; color: #ffd700; letter-spacing: 2px; margin-bottom: -5px; text-align: center;}
+.rank-value {
+    font-family: 'Black Ops One', cursive; font-size: 4.2rem;
+    background: linear-gradient(to bottom, #fff 30%, #ffd700 70%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px 0 #8b0000); line-height: 0.9;
 }
 
-/* Visual & Frame */
-.card-content-wrapper {
-    position: relative; z-index: 5; background: rgba(0,0,0,0.3); padding: 15px;
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+/* Inner Frame & Visual */
+.card-inner-frame {
+    background: rgba(0,0,0,0.3); padding: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+}
+
+/* --- FIX: PHOTO FRAME & CROP --- */
+.portrait-frame-container {
+    padding: 5px; border: 1px solid #ff4500;
+    background: #000; transform: skewX(-5deg); /* Skew sedikit dikurangi agar foto tidak terlalu miring */
+    box-shadow: 0 0 15px rgba(255,69,0,0.4);
 }
 .portrait-frame {
-    position: relative; height: 260px; border: 3px solid #ff4500;
-    overflow: hidden; transform: skewX(-3deg); box-shadow: 0 0 15px rgba(255,69,0,0.5);
+    position: relative;
+    height: 320px; /* LEBIH TINGGI untuk portrait yang bagus */
+    border: 3px solid #333; overflow: hidden;
 }
 .portrait-frame img {
-    width: 100%; height: 100%; object-fit: cover; filter: contrast(1.2) saturate(1.2);
+    width: 100%; height: 100%;
+    /* KUNCI PERBAIKAN CROP OUTPUT */
+    object-fit: cover;
+    object-position: center top; /* Memastikan wajah di bagian atas selalu terlihat */
+    filter: contrast(1.1) saturate(1.2) sepia(0.1); /* Efek retro subtle */
 }
-.scanlines {
+.scanlines-overlay {
     position: absolute; top:0; left:0; width:100%; height:100%;
-    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.3) 3px);
-    pointer-events: none; z-index: 6;
+    background: repeating-linear-gradient(to bottom, transparent 0px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.3) 3px);
+    pointer-events: none; z-index: 6; mix-blend-mode: overlay;
+}
+.frame-glare { /* Kilatan kaca di atas foto */
+    position: absolute; top:0; left:0; width:100%; height:100%; z-index: 7;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0) 50%);
+    pointer-events: none;
 }
 
-/* Name Bar */
-.fighter-name-bar {
+/* Name Plate */
+.fighter-name-plate {
     background: linear-gradient(90deg, #8b0000, #ff4500);
-    padding: 8px 15px; margin-top: -15px; margin-left: 30px;
-    position: relative; z-index: 7; border: 2px solid #ffd700;
-    transform: skewX(-10deg); box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
+    padding: 12px 15px; margin-top: -20px; margin-left: auto; width: 90%;
+    position: relative; z-index: 8; border: 2px solid #ffd700;
+    transform: skewX(-10deg); box-shadow: 8px 8px 0 rgba(0,0,0,0.6);
 }
-.fighter-name-bar h2 {
-    font-family: 'Black Ops One', cursive; font-size: 1.4rem; color: #fff;
+.fighter-name-plate h2 {
+    font-family: 'Black Ops One', cursive; font-size: 1.6rem; color: #fff;
     text-align: right; transform: skewX(10deg); white-space: nowrap; overflow: hidden;
+    text-shadow: 2px 2px 0 #000;
 }
 
-/* Stats */
-.card-stats-panel { margin-top: 25px; padding: 10px; border-top: 1px solid #444; }
-.card-stats-panel h3 { font-size: 0.8rem; color: #666; margin-bottom: 10px; letter-spacing: 2px; }
-
-.stat-row { margin-bottom: 12px; }
-.stat-info { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 0.8rem; }
-.stat-label { color: #aaa; }
-.stat-value { color: #ffd700; font-weight: bold; }
-
-.bar-container-outer {
-    height: 18px; background: #111; border: 1px solid #333; padding: 2px;
-    transform: skewX(-20deg);
+/* Stats Panel Premium */
+.stats-panel { margin-top: 30px; }
+.panel-header {
+    font-size: 0.7rem; color: #777; letter-spacing: 3px; border-bottom: 2px solid #333;
+    margin-bottom: 15px; padding-bottom: 5px; text-align: right;
 }
-.bar-container-inner { height: 100%; width: 100%; background: #222; position: relative; }
+.stat-row { margin-bottom: 18px; }
+.stat-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; }
+.stat-label { color: #ccc; }
+.stat-label small { color: #777; font-size: 0.7rem; margin-left: 5px; }
+.stat-num-value { color: #ffd700; font-size: 1.1rem; font-weight: bold; text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+
+.bar-track {
+    height: 22px; background: #0a0a0a; border: 2px solid #333;
+    padding: 2px; transform: skewX(-15deg); box-shadow: inset 0 2px 5px #000;
+}
 .bar-fill {
-    height: 100%; width: 0%; position: relative; transition: width 1s ease-out;
+    height: 100%; width: 0%; position: relative; overflow: hidden;
+    transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efek bounce saat mengisi */
+    box-shadow: 0 0 10px currentColor;
 }
-.bar-fill::after {
-    content: ''; position: absolute; top:0; right:0; width: 4px; height: 100%;
-    background: #fff; box-shadow: 0 0 8px #fff;
+.bar-glare {
+    position: absolute; top:0; left:0; width:100%; height:50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
 }
 
-/* Bar Gradients */
-.hp-bar { background: linear-gradient(90deg, #cfa800, #ff0000); }
-.mp-bar { background: linear-gradient(90deg, #008b8b, #00ffff); }
-.crit-bar { background: linear-gradient(90deg, #006400, #7cfc00); }
+/* Bar Colors Premium Gradients */
+.hp-bar { background: linear-gradient(to right, #cfa800, #ff0000); color: #ff0000; }
+.mp-bar { background: linear-gradient(to right, #008b8b, #00eaff); color: #00eaff;}
+.crit-bar { background: linear-gradient(to right, #006400, #39ff14); color: #39ff14;}
 
-/* Footer Deco */
-.card-footer-deco { margin-top: 10px; font-size: 0.6rem; color: #555; text-align: center; letter-spacing: 1px; }
+.card-footer-deco {
+    margin-top: 5px; font-size: 0.55rem; color: #666; text-align: center;
+    letter-spacing: 2px; padding-top: 5px; border-top: 1px dashed #333;
+    background: #050505; padding-bottom: 5px;
+}
 
-/* BUTTONS */
-.action-buttons { display: flex; gap: 10px; margin-top: 20px; }
+/* === BUTTONS & FOOTER === */
+.action-buttons-container { display: flex; gap: 10px; margin-top: 25px; }
 .arcade-btn {
-    width: 100%; padding: 15px; background: linear-gradient(45deg, #b22222, #ff4500);
-    border: none; color: #fff; font-size: 1.1rem; text-transform: uppercase;
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-    cursor: pointer; transition: 0.2s;
+    border: none; color: #fff; font-size: 1.1rem; text-transform: uppercase; cursor: pointer;
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+    transition: 0.2s; font-family: 'Black Ops One', cursive; letter-spacing: 1px;
+    text-shadow: 1px 1px 0 #000;
 }
-.arcade-btn:hover { filter: brightness(1.2); transform: scale(1.02); }
-.arcade-btn.retry { background: #333; font-size: 0.9rem; }
-.arcade-btn.download { background: linear-gradient(45deg, #006400, #00ff00); color: #000; font-weight: bold; font-size: 0.9rem; }
+.main-btn { width: 100%; padding: 18px; background: linear-gradient(45deg, #ff4500, #ff0000); font-size: 1.3rem; }
+.arcade-btn.small { flex: 1; padding: 15px; font-size: 0.85rem; }
+.arcade-btn.retry { background: linear-gradient(to bottom, #444, #222); color: #aaa; }
+.arcade-btn.download {
+    background: linear-gradient(45deg, #00c853, #64dd17);
+    color: #003300; text-shadow: none; font-weight: bold;
+    box-shadow: 0 0 15px rgba(0, 200, 83, 0.4);
+}
+.arcade-btn:active { transform: scale(0.97); }
 
-/* PRIVACY */
-.privacy-notice { margin-top: 30px; font-size: 0.6rem; color: #444; border-top: 1px solid #222; padding-top: 10px; }
+.privacy-notice { margin-top: 40px; font-size: 0.7rem; color: #555; padding-top: 15px; border-top: 1px solid #222; line-height: 1.4; }
 
-/* ANIMATIONS */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes flarePulse { from { opacity: 0.3; transform: scale(1); } to { opacity: 0.6; transform: scale(1.05); } }
+@keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulseFlare { from { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); } to { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); } }
+
+/* Responsive Adjustment for smaller phones */
+@media (max-width: 380px) {
+    .game-header h1 { font-size: 2.2rem; }
+    .portrait-frame { height: 280px; }
+    .rank-value { font-size: 3.5rem; }
+    .arcade-btn.small { font-size: 0.75rem; padding: 12px; }
+}

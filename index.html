@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2025 FIGHTER STATS</title>
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Black+Ops+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -13,7 +13,7 @@
         <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3?filename=retro-game-music-short-loop.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="container">
+    <div class="main-container">
         
         <header class="game-header">
             <h1>THE KING OF <span class="year">2025</span></h1>
@@ -21,111 +21,115 @@
         </header>
 
         <section id="input-section" class="panel active">
-            <div class="form-group">
-                <label>PLAYER NAME</label>
-                <input type="text" id="charName" placeholder="INSERT NAME..." maxlength="12" autocomplete="off">
-            </div>
-
-            <div class="form-group photo-upload">
-                <label>AVATAR UPLOAD</label>
-                <input type="file" id="charPhoto" accept="image/*">
-                <div class="preview-box" id="previewBox">CLICK TO UPLOAD PHOTO</div>
-            </div>
-
-            <div class="stats-input">
-                <div class="slider-group">
-                    <label>HAPPINESS <span id="val-happy">50</span></label>
-                    <input type="range" id="happy" min="0" max="100" value="50">
+            <div class="glass-panel form-container">
+                <div class="form-group">
+                    <label>PLAYER NAME</label>
+                    <input type="text" id="charName" placeholder="INSERT NAME..." maxlength="12" autocomplete="off">
                 </div>
-                <div class="slider-group">
-                    <label>BUSYNESS <span id="val-busy">50</span></label>
-                    <input type="range" id="busy" min="0" max="100" value="50">
-                </div>
-                <div class="slider-group">
-                    <label>LUCK <span id="val-luck">50</span></label>
-                    <input type="range" id="luck" min="0" max="100" value="50">
-                </div>
-            </div>
 
-            <button id="generateBtn" class="arcade-btn">READY? GO!</button>
+                <div class="form-group photo-upload-group">
+                    <label>AVATAR UPLOAD (Best: Portrait)</label>
+                    <input type="file" id="charPhoto" accept="image/*">
+                    <div class="preview-box" id="previewBox">
+                        <span>TAP TO UPLOAD PHOTO</span>
+                    </div>
+                </div>
+
+                <div class="stats-input">
+                    <div class="slider-group">
+                        <label>HAPPINESS <span id="val-happy" class="val-indicator">50</span></label>
+                        <input type="range" id="happy" min="0" max="100" value="50">
+                    </div>
+                    <div class="slider-group">
+                        <label>BUSYNESS <span id="val-busy" class="val-indicator">50</span></label>
+                        <input type="range" id="busy" min="0" max="100" value="50">
+                    </div>
+                    <div class="slider-group">
+                        <label>LUCK <span id="val-luck" class="val-indicator">50</span></label>
+                        <input type="range" id="luck" min="0" max="100" value="50">
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="arcade-btn main-btn">READY? GO!</button>
+            </div>
         </section>
 
         <section id="output-section" class="panel hidden">
             
-            <div class="character-card-container">
-                <div class="card-bg-flares"></div>
-                
+            <div class="capture-area">
+                 <div class="bg-flare-effect"></div>
+
                 <div class="character-card" id="cardToDownload">
-                    <div class="rank-container">
-                        <span class="rank-label">BATTLE RANK</span>
-                        <span class="rank" id="rankBadge">A</span>
+                    <div class="rank-badge-container">
+                        <div class="rank-metal-plate">
+                            <span class="rank-label">BATTLE RANK</span>
+                            <span class="rank-value" id="rankBadge">A</span>
+                        </div>
                     </div>
 
-                    <div class="card-content-wrapper">
-                        <div class="card-visual">
-                            <div class="portrait-frame">
-                                <img id="displayPhoto" src="" alt="Character">
-                                <div class="scanlines"></div> </div>
-                             <div class="fighter-name-bar">
+                    <div class="card-inner-frame">
+                        <div class="visual-section">
+                            <div class="portrait-frame-container">
+                                <div class="portrait-frame">
+                                    <img id="displayPhoto" src="" alt="Character">
+                                    <div class="scanlines-overlay"></div>
+                                    <div class="frame-glare"></div>
+                                </div>
+                            </div>
+                             <div class="fighter-name-plate">
                                 <h2 id="displayName">PLAYER NAME</h2>
                             </div>
                         </div>
 
-                        <div class="card-stats-panel">
-                            <h3>STATUS REPORT</h3>
+                        <div class="stats-panel">
+                            <div class="panel-header">STATUS REPORT // 2025</div>
                             
                             <div class="stat-row">
                                 <div class="stat-info">
-                                    <span class="stat-label">HP (Happiness)</span>
-                                    <span class="stat-value" id="val-happy-out">00</span>
+                                    <span class="stat-label">HP <small>(Happiness)</small></span>
+                                    <span class="stat-num-value" id="val-happy-out">00</span>
                                 </div>
-                                <div class="bar-container-outer">
-                                    <div class="bar-container-inner">
-                                        <div class="bar-fill hp-bar" id="barHappy"></div>
+                                <div class="bar-track">
+                                    <div class="bar-fill hp-bar" id="barHappy">
+                                        <div class="bar-glare"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="stat-row">
                                 <div class="stat-info">
-                                    <span class="stat-label">MP (Busyness)</span>
-                                    <span class="stat-value" id="val-busy-out">00</span>
+                                    <span class="stat-label">MP <small>(Busyness)</small></span>
+                                    <span class="stat-num-value" id="val-busy-out">00</span>
                                 </div>
-                                <div class="bar-container-outer">
-                                    <div class="bar-container-inner">
-                                        <div class="bar-fill mp-bar" id="barBusy"></div>
+                                <div class="bar-track">
+                                    <div class="bar-fill mp-bar" id="barBusy">
+                                        <div class="bar-glare"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="stat-row">
                                 <div class="stat-info">
-                                    <span class="stat-label">CRIT (Luck)</span>
-                                    <span class="stat-value" id="val-luck-out">00</span>
+                                    <span class="stat-label">CRIT <small>(Luck)</small></span>
+                                    <span class="stat-num-value" id="val-luck-out">00</span>
                                 </div>
-                                <div class="bar-container-outer">
-                                    <div class="bar-container-inner">
-                                        <div class="bar-fill crit-bar" id="barLuck"></div>
+                                <div class="bar-track">
+                                    <div class="bar-fill crit-bar" id="barLuck">
+                                        <div class="bar-glare"></div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> </div> <div class="card-footer-deco">
+                        KOF 2025 GLOBAL TOURNAMENT /// CHALLENGER ENTRY CARD
                     </div>
-
-                    <div class="card-footer-deco">
-                        <span>KOF 2025 TOURNAMENT // CHALLENGER ENTRY</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="action-buttons">
+                </div> </div> <div class="action-buttons-container">
                 <button id="retryBtn" class="arcade-btn small retry">NEW PLAYER</button>
-                <button id="downloadBtn" class="arcade-btn small download">SAVE CARD</button>
+                <button id="downloadBtn" class="arcade-btn small download">SAVE FOR INSTAGRAM</button>
             </div>
         </section>
 
         <footer class="privacy-notice">
-            <p>🔒 SECURE: DATA PROCESSED LOCALLY. NO UPLOAD.</p>
+            <p>Isi data cuma buat seru-seruan. Data diproses di browser kamu, gak ada yang diupload ke server. Aman.</p>
         </footer>
     </div>
 
