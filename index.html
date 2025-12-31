@@ -1,4 +1,57 @@
-<section id="output-section" class="panel hidden">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 FIGHTER STATS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Black+Ops+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="bgm" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3?filename=retro-game-music-short-loop.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        
+        <header class="game-header">
+            <h1>THE KING OF <span class="year">2025</span></h1>
+            <p class="subtitle">SELECT YOUR FIGHTER</p>
+        </header>
+
+        <section id="input-section" class="panel active">
+            <div class="form-group">
+                <label>PLAYER NAME</label>
+                <input type="text" id="charName" placeholder="INSERT NAME..." maxlength="12" autocomplete="off">
+            </div>
+
+            <div class="form-group photo-upload">
+                <label>AVATAR UPLOAD</label>
+                <input type="file" id="charPhoto" accept="image/*">
+                <div class="preview-box" id="previewBox">CLICK TO UPLOAD PHOTO</div>
+            </div>
+
+            <div class="stats-input">
+                <div class="slider-group">
+                    <label>HAPPINESS <span id="val-happy">50</span></label>
+                    <input type="range" id="happy" min="0" max="100" value="50">
+                </div>
+                <div class="slider-group">
+                    <label>BUSYNESS <span id="val-busy">50</span></label>
+                    <input type="range" id="busy" min="0" max="100" value="50">
+                </div>
+                <div class="slider-group">
+                    <label>LUCK <span id="val-luck">50</span></label>
+                    <input type="range" id="luck" min="0" max="100" value="50">
+                </div>
+            </div>
+
+            <button id="generateBtn" class="arcade-btn">READY? GO!</button>
+        </section>
+
+        <section id="output-section" class="panel hidden">
+            
             <div class="character-card-container">
                 <div class="card-bg-flares"></div>
                 
@@ -12,8 +65,7 @@
                         <div class="card-visual">
                             <div class="portrait-frame">
                                 <img id="displayPhoto" src="" alt="Character">
-                                <div class="scanlines"></div>
-                            </div>
+                                <div class="scanlines"></div> </div>
                              <div class="fighter-name-bar">
                                 <h2 id="displayName">PLAYER NAME</h2>
                             </div>
@@ -21,6 +73,7 @@
 
                         <div class="card-stats-panel">
                             <h3>STATUS REPORT</h3>
+                            
                             <div class="stat-row">
                                 <div class="stat-info">
                                     <span class="stat-label">HP (Happiness)</span>
@@ -32,6 +85,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="stat-row">
                                 <div class="stat-info">
                                     <span class="stat-label">MP (Busyness)</span>
@@ -43,6 +97,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="stat-row">
                                 <div class="stat-info">
                                     <span class="stat-label">CRIT (Luck)</span>
@@ -61,8 +116,20 @@
                         <span>KOF 2025 TOURNAMENT // CHALLENGER ENTRY</span>
                     </div>
                 </div>
-            </div> <div class="action-buttons">
-                <button id="retryBtn" class="arcade-btn small retry">NEW CHALLENGER</button>
+            </div>
+
+            <div class="action-buttons">
+                <button id="retryBtn" class="arcade-btn small retry">NEW PLAYER</button>
                 <button id="downloadBtn" class="arcade-btn small download">SAVE CARD</button>
             </div>
         </section>
+
+        <footer class="privacy-notice">
+            <p>🔒 SECURE: DATA PROCESSED LOCALLY. NO UPLOAD.</p>
+        </footer>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

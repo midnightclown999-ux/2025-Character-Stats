@@ -1,227 +1,176 @@
-/* =========================================
-   REVISED OUTPUT CARD DESIGN (KOF AESTHETIC)
-========================================= */
+/* RESET & BASIC */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Russo One', sans-serif; }
 
-/* Container luar untuk menampung kartu dan efek background */
+body {
+    background-color: #050510;
+    /* Background Pattern Carbon */
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container { width: 100%; max-width: 450px; padding: 20px; text-align: center; }
+
+/* HEADER */
+.game-header h1 {
+    font-family: 'Black Ops One', cursive;
+    font-size: 2.5rem;
+    color: #ffd700;
+    text-shadow: 3px 3px 0px #8b0000;
+    font-style: italic;
+    transform: skewX(-10deg);
+}
+.subtitle { color: #00d2ff; margin-bottom: 20px; letter-spacing: 2px; font-size: 0.8rem; }
+
+/* PANEL LOGIC */
+.panel.hidden { display: none; }
+.panel.active { display: block; animation: fadeIn 0.5s ease; }
+
+/* INPUT FORM */
+.form-group { margin-bottom: 15px; text-align: left; }
+label { display: block; margin-bottom: 5px; color: #aaa; font-size: 0.7rem; letter-spacing: 1px; }
+
+input[type="text"] {
+    width: 100%; background: rgba(255, 255, 255, 0.1); border: 2px solid #333;
+    padding: 10px; color: #fff; font-size: 1.2rem; text-transform: uppercase;
+    outline: none; transition: 0.3s;
+}
+input[type="text"]:focus { border-color: #ffd700; box-shadow: 0 0 10px #ffd700; }
+
+/* PHOTO UPLOAD */
+.photo-upload input { display: none; }
+.preview-box {
+    width: 100%; height: 150px; border: 2px dashed #444;
+    display: flex; justify-content: center; align-items: center;
+    color: #555; cursor: pointer; background-size: cover; background-position: center;
+    font-size: 0.8rem;
+}
+.preview-box:hover { border-color: #00d2ff; color: #00d2ff; }
+
+/* SLIDER */
+.slider-group { margin-bottom: 15px; text-align: left; }
+input[type="range"] { width: 100%; accent-color: #b22222; cursor: pointer; }
+
+/* === KOF CARD DESIGN (NEW) === */
 .character-card-container {
-    position: relative;
-    margin-bottom: 25px;
-    perspective: 1000px; /* Untuk sedikit efek 3D */
+    position: relative; margin-bottom: 25px; perspective: 1000px;
 }
 
-/* Efek flare/energi di belakang kartu */
+/* Background Flare */
 .card-bg-flares {
-    position: absolute;
-    top: -20px; left: -20px; right: -20px; bottom: -20px;
-    background: radial-gradient(circle, rgba(255,69,0,0.4) 0%, rgba(0,0,0,0) 70%);
-    z-index: 0;
-    animation: flarePulse 3s infinite alternate;
+    position: absolute; top: -20px; left: -20px; right: -20px; bottom: -20px;
+    background: radial-gradient(circle, rgba(255,69,0,0.3) 0%, rgba(0,0,0,0) 70%);
+    z-index: 0; animation: flarePulse 3s infinite alternate;
 }
 
-/* KARTU UTAMA */
+/* Main Card Body */
 .character-card {
-    position: relative;
-    z-index: 2;
-    /* Background metalik gelap + tekstur sirkuit */
-    background: 
-        linear-gradient(135deg, rgba(20,0,0,0.9), rgba(60,0,0,0.9)),
-        url('https://www.transparenttextures.com/patterns/dark-geometric.png');
-    border: 4px solid;
-    /* Border gradient emas ke merah */
+    position: relative; z-index: 2;
+    background: linear-gradient(135deg, rgba(20,0,0,0.95), rgba(40,0,0,0.95));
+    border: 3px solid;
     border-image: linear-gradient(45deg, #ffd700, #ff4500, #8b0000) 1;
     padding: 5px;
-    /* Bentuk asimetris agresif */
     clip-path: polygon(0 0, 95% 0, 100% 30px, 100% 100%, 5% 100%, 0% calc(100% - 30px));
-    box-shadow: 0 0 30px rgba(255, 69, 0, 0.6);
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.5);
     overflow: hidden;
 }
 
-/* Garis energi hiasan di dalam kartu */
-.character-card::before, .character-card::after {
-    content: ''; position: absolute; height: 2px; width: 100%;
-    background: linear-gradient(90deg, transparent, #ffd700, transparent);
-    z-index: 3; opacity: 0.5;
-}
-.character-card::before { top: 40px; left: -50%; animation: lineScan 4s infinite linear; }
-.character-card::after { bottom: 60px; right: -50%; animation: lineScan 4s infinite linear reverse; }
-
-
-/* --- RANK BADGE SECTION --- */
+/* Rank Badge */
 .rank-container {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 10;
-    text-align: center;
-    transform: rotate(-5deg);
+    position: absolute; top: 10px; left: 10px; z-index: 10;
+    text-align: center; transform: rotate(-5deg);
 }
-
 .rank-label {
-    display: block;
-    font-size: 0.7rem;
-    color: #ffd700;
-    background: #8b0000;
-    padding: 2px 5px;
-    border: 1px solid #ffd700;
-    margin-bottom: -5px;
+    display: block; font-size: 0.6rem; color: #ffd700; background: #8b0000;
+    padding: 2px 5px; margin-bottom: -5px; border: 1px solid #ffd700;
 }
-
 .rank {
-    font-family: 'Black Ops One', cursive;
-    font-size: 4.5rem;
-    /* Efek teks berapi-api */
-    color: #fff;
-    text-shadow: 
-        0 0 5px #fff,
-        0 0 10px #ff4500,
-        0 0 20px #ff0000,
-        0 0 30px #8b0000;
-    margin: 0;
-    line-height: 1;
+    font-family: 'Black Ops One', cursive; font-size: 4rem; color: #fff;
+    text-shadow: 0 0 5px #fff, 0 0 10px #ff4500, 0 0 20px #ff0000;
+    margin: 0; line-height: 1;
 }
 
-
-/* --- VISUAL AREA (Photo & Name) --- */
+/* Visual & Frame */
 .card-content-wrapper {
-    position: relative;
-    z-index: 5;
-    background: rgba(0,0,0,0.5);
-    padding: 15px;
-    /* Bentuk dalam yang sedikit berbeda */
+    position: relative; z-index: 5; background: rgba(0,0,0,0.3); padding: 15px;
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
 }
-
 .portrait-frame {
-    position: relative;
-    height: 280px;
-    border: 3px solid #ff4500;
-    box-shadow: 0 0 15px rgba(255, 69, 0, 0.8);
-    overflow: hidden;
-    margin-bottom: 0; /* Dihapus margin bawahnya */
-    transform: skewX(-3deg);
+    position: relative; height: 260px; border: 3px solid #ff4500;
+    overflow: hidden; transform: skewX(-3deg); box-shadow: 0 0 15px rgba(255,69,0,0.5);
 }
-
 .portrait-frame img {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: contrast(1.2) saturate(1.2); /* Membuat warna foto lebih tajam ala game */
+    width: 100%; height: 100%; object-fit: cover; filter: contrast(1.2) saturate(1.2);
 }
-
-/* Efek Scanline TV Retro */
 .scanlines {
     position: absolute; top:0; left:0; width:100%; height:100%;
-    background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 2px,
-        rgba(0,0,0,0.3) 3px,
-        rgba(0,0,0,0.3) 4px
-    );
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.3) 3px);
     pointer-events: none; z-index: 6;
 }
 
+/* Name Bar */
 .fighter-name-bar {
     background: linear-gradient(90deg, #8b0000, #ff4500);
-    padding: 10px 15px;
-    margin-top: -15px; /* Overlap ke atas foto */
-    margin-left: 20px; /* Geser ke kanan */
-    position: relative;
-    z-index: 7;
-    border: 2px solid #ffd700;
-    transform: skewX(-10deg);
-    box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
+    padding: 8px 15px; margin-top: -15px; margin-left: 30px;
+    position: relative; z-index: 7; border: 2px solid #ffd700;
+    transform: skewX(-10deg); box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
 }
-
 .fighter-name-bar h2 {
-    font-family: 'Black Ops One', cursive;
-    font-size: 1.6rem;
-    color: #fff;
-    text-shadow: 2px 2px 0 #000;
-    text-align: right;
-    transform: skewX(10deg); /* Mengembalikan kemiringan teks */
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-family: 'Black Ops One', cursive; font-size: 1.4rem; color: #fff;
+    text-align: right; transform: skewX(10deg); white-space: nowrap; overflow: hidden;
 }
 
-
-/* --- STATS PANEL --- */
-.card-stats-panel {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(0,0,0,0.6);
-    border-top: 2px solid #444;
-    position: relative;
-}
-
-.card-stats-panel h3 {
-    font-size: 0.9rem; color: #555; margin-bottom: 15px; letter-spacing: 2px;
-}
+/* Stats */
+.card-stats-panel { margin-top: 25px; padding: 10px; border-top: 1px solid #444; }
+.card-stats-panel h3 { font-size: 0.8rem; color: #666; margin-bottom: 10px; letter-spacing: 2px; }
 
 .stat-row { margin-bottom: 12px; }
-
-.stat-info {
-    display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.8rem;
-}
+.stat-info { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 0.8rem; }
 .stat-label { color: #aaa; }
 .stat-value { color: #ffd700; font-weight: bold; }
 
-/* Desain Bar Baru: Lebih mekanikal */
 .bar-container-outer {
-    height: 20px;
-    background: #111;
-    border: 2px solid #333;
-    padding: 2px;
+    height: 18px; background: #111; border: 1px solid #333; padding: 2px;
     transform: skewX(-20deg);
-    box-shadow: inset 0 0 5px #000;
 }
-
-.bar-container-inner {
-    height: 100%; width: 100%;
-    background: #222;
-    overflow: hidden;
-    position: relative;
-}
-
-/* Garis grid halus di dalam bar kosong */
-.bar-container-inner::after {
-    content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
-    background-image: linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-    background-size: 5px 100%; z-index: 1;
-}
-
+.bar-container-inner { height: 100%; width: 100%; background: #222; position: relative; }
 .bar-fill {
-    height: 100%; width: 0%; position: relative; z-index: 2;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-    transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Efek easing yang lebih 'berat' */
+    height: 100%; width: 0%; position: relative; transition: width 1s ease-out;
 }
-
-/* Kilatan di ujung bar */
 .bar-fill::after {
-    content: ''; position: absolute; top:0; right:0; width: 5px; height: 100%;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 10px #fff;
+    content: ''; position: absolute; top:0; right:0; width: 4px; height: 100%;
+    background: #fff; box-shadow: 0 0 8px #fff;
 }
 
-/* Warna Bar dengan Gradasi Plasma */
-.hp-bar { background: linear-gradient(90deg, #cfa800, #ff0000, #ff4500); }
-.mp-bar { background: linear-gradient(90deg, #008b8b, #00ffff, #0000ff); }
-.crit-bar { background: linear-gradient(90deg, #006400, #00ff00, #adff2f); }
+/* Bar Gradients */
+.hp-bar { background: linear-gradient(90deg, #cfa800, #ff0000); }
+.mp-bar { background: linear-gradient(90deg, #008b8b, #00ffff); }
+.crit-bar { background: linear-gradient(90deg, #006400, #7cfc00); }
 
+/* Footer Deco */
+.card-footer-deco { margin-top: 10px; font-size: 0.6rem; color: #555; text-align: center; letter-spacing: 1px; }
 
-/* --- FOOTER & BUTTONS --- */
-.card-footer-deco {
-    margin-top: 10px; font-size: 0.6rem; color: #888; text-align: center; letter-spacing: 1px;
-    border-top: 1px dashed #333; padding-top: 5px;
+/* BUTTONS */
+.action-buttons { display: flex; gap: 10px; margin-top: 20px; }
+.arcade-btn {
+    width: 100%; padding: 15px; background: linear-gradient(45deg, #b22222, #ff4500);
+    border: none; color: #fff; font-size: 1.1rem; text-transform: uppercase;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    cursor: pointer; transition: 0.2s;
 }
+.arcade-btn:hover { filter: brightness(1.2); transform: scale(1.02); }
+.arcade-btn.retry { background: #333; font-size: 0.9rem; }
+.arcade-btn.download { background: linear-gradient(45deg, #006400, #00ff00); color: #000; font-weight: bold; font-size: 0.9rem; }
 
-.action-buttons {
-    display: flex; justify-content: space-between; margin-top: 20px;
-}
-.arcade-btn.retry { background: linear-gradient(45deg, #333, #555); color: #ccc; }
-.arcade-btn.download { background: linear-gradient(45deg, #006400, #00ff00); color: #000; text-shadow: none; font-weight: bold;}
+/* PRIVACY */
+.privacy-notice { margin-top: 30px; font-size: 0.6rem; color: #444; border-top: 1px solid #222; padding-top: 10px; }
 
-
-/* --- ANIMATIONS BARU --- */
-@keyframes flarePulse { from { opacity: 0.4; transform: scale(1); } to { opacity: 0.7; transform: scale(1.05); } }
-@keyframes lineScan { from { left: -50%; } to { left: 150%; } }
+/* ANIMATIONS */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes flarePulse { from { opacity: 0.3; transform: scale(1); } to { opacity: 0.6; transform: scale(1.05); } }
